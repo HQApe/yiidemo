@@ -13,6 +13,14 @@ class MUser extends ActiveRecord implements IdentityInterface
         return '{{%tb_user}}';
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            return true;
+        }
+        return false;
+    }
+
     public static function findByAccount($account)
     {
 //        $model = Yii::$app->db->createCommand('SELECT * FROM tb_user WHERE account=:account')->bindValue(':account', $account)->queryOne();

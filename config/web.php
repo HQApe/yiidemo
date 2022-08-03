@@ -60,8 +60,9 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'list'=>'list/index',
-                'list/<code:\d+>' => 'list/view'
+                'list/<code:\w+>' => 'list/view',
+                'user' => "user/list",
+                'user/<id:\d+>/<userId:\d+>' => 'user/view'
             ],
         ],
     ],
