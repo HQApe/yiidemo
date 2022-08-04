@@ -60,6 +60,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'list/all' => "list/all",
                 '<controller:(demo|list)>s' => '<controller>/index',
                 '<controller:(list)>/<code:\w+>' => '<controller>/view',
                 '<controller:(demo)>/<id:\w+>' => '<controller>/view',

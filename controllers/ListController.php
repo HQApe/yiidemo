@@ -48,6 +48,27 @@ class ListController extends Controller
         ]);
     }
 
+    public function actionAll()
+    {
+
+        $allCountry = Country::find()->all();
+//        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//        return [
+//            'message' => 'hello world',
+//            'code' => 200,
+//            'data' => $allCountry
+//        ];
+        return \Yii::createObject([
+            'class' => 'yii\web\Response',
+            'format' => \yii\web\Response::FORMAT_JSON,
+            'data' => [
+                'message' => '',
+                'code' => 200,
+                'data' => $allCountry
+            ],
+        ]);
+    }
+
     /**
      * Displays a single Country model.
      * @param string $code Code
