@@ -60,9 +60,15 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'list/<code:\w+>' => 'list/view',
+                '<controller:(demo|list)>s' => '<controller>/index',
+                '<controller:(list)>/<code:\w+>' => '<controller>/view',
+                '<controller:(demo)>/<id:\w+>' => '<controller>/view',
+                '<controller:(list)>/<code:\w+>/<action:(update|delete)>' => '<controller>/<action>',
+                '<controller:(demo)>/<action:(update|delete)>/<id:\w+>' => '<controller>/<action>',
                 'user' => "user/list",
-                'user/<id:\d+>/<userId:\d+>' => 'user/view'
+                'user/<id:\d+>/<userId:\d+>' => 'user/view',
+                'user/<userId:\d+>' => 'user/view',
+                'user/update/<userId:\d+>' => 'user/update'
             ],
         ],
     ],
