@@ -50,7 +50,7 @@ class ListController extends Controller
 
     public function actionAll()
     {
-
+        \Yii::$app->redis->hset("custom_key", "my_key", "hahaha");
         $allCountry = Country::find()->all();
 //        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 //        return [
@@ -64,6 +64,7 @@ class ListController extends Controller
             'data' => [
                 'message' => '',
                 'code' => 200,
+                'redis' => \Yii::$app->redis->hget("custom_key", "my_key"),
                 'data' => $allCountry
             ],
         ]);

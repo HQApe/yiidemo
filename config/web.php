@@ -26,7 +26,20 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'e7lOsL-EfEmf5-FCyr28GNLGeQzBRE1Z',
         ],
-
+        'response' => [
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null) {
+                    $response->statusCode = 200;
+                }
+            },
+        ],
+        'session' => [
+            'class' => 'yii\web\DbSession',
+             'db' => $db,  // 数据库连接的应用组件ID，默认为'db'.
+             'sessionTable' => 'my_session', // session 数据表名，默认为'session'.
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -37,6 +50,7 @@ $config = [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+            'maxSourceLines' => 20,
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -51,10 +65,33 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    'categories' => [
+                        'yii\db\*',
+                        'yii\web\HttpException:*',
+                    ],
+                    'except' => [
+                        'yii\web\HttpException:404',
+                    ],
+                ],
+                [
+                    'class' => 'yii\log\EmailTarget',
+                    'levels' => ['error'],
+                    'categories' => ['yii\db\*'],
+                    'message' => [
+                        'from' => ['zhanghuaiqng8080@163.com'],
+                        'to' => ['1411935388@qq.com'],
+                        'subject' => 'Database errors at example.com',
+                    ],
                 ],
             ],
         ],
         'db' => $db,
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'host.docker.internal',
+            'port' => 6378,
+            'database' => 0,
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
